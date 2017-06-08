@@ -1,0 +1,149 @@
+{
+    "__version": "1.0",
+    "__author": "Romain Decker - cloudmaniac.net",
+    "__comments": "Configuration answerfile for lab01",
+    "sources": {
+        "extractedvcsadir": "D:\\Deploy\\Resources\\VMware-VCSA-all-6.5.0-4944578",
+        "nestedesxiova": "D:\\Deploy\\Resources\\ESXi-6.5d\\Nested_ESXi6.5d_Appliance_Template_v1.0.ova"
+    },
+    "deploytriggers": {
+        "deploytype": "vcenter",
+        "switchtype": "vss"
+    },
+    "general": {
+        "vapp": "Nested-ESXi6.5-Lab01",
+        "network": {
+            "netmask": "255.255.255.0",
+            "gateway": "10.51.10.254",
+            "prefix": "24",
+            "dns": "10.51.10.5",
+            "domain": "vmworld.local"
+        },
+        "syslog": "10.51.10.80",
+        "ntp": "time.sddc.lab",
+        "password": "VMware1!",
+        "activatessh": true
+    },
+    "target": {
+        "server": "vc01-mgmt-z51.sddc.lab",
+        "username": "administrator@vsphere.local",
+        "password": "VMware1!",
+        "deploycluster": "DEPLOY-CLUSTER"
+    },
+    "esxi": {
+        "deploydatastore": "LAB-EQL-iSCSI01",
+        "deployportgroup": "NET_LAB-TRUNKNESTED",
+        "activatessh": "true",
+        "hosts": [
+            {
+                "name": "esximgt-01a",
+                "cluster": "Management and Edge Cluster",
+                "vmkmgtip": "10.51.10.231",
+                "vmkmgtvlan": "511",
+                "vmknfsip": "10.51.30.231",
+                "vmknfsvlan": "513",
+                "distributedswitch": "vds-edge"
+            },
+            {
+                "name": "esximgt-02a",
+                "cluster": "Management and Edge Cluster",
+                "vmkmgtip": "10.51.10.232",
+                "vmkmgtvlan": "511",
+                "vmknfsip": "10.51.30.232",
+                "vmknfsvlan": "513",
+                "distributedswitch": "vds-edge"
+            },
+            {
+                "name": "esximgt-03a",
+                "cluster": "Management and Edge Cluster",
+                "vmkmgtip": "10.51.10.233",
+                "vmkmgtvlan": "511",
+                "vmknfsip": "10.51.30.233",
+                "vmknfsvlan": "513",
+                "distributedswitch": "vds-edge"
+            },
+            {
+                "name": "esxi-01a",
+                "cluster": "Compute Cluster A",
+                "vmkmgtip": "10.51.10.234",
+                "vmkmgtvlan": "511",
+                "vmknfsip": "10.51.30.234",
+                "vmknfsvlan": "513",
+                "distributedswitch": "vds-compute"
+            },
+            {
+                "name": "esxi-02a",
+                "cluster": "Compute Cluster A",
+                "vmkmgtip": "10.51.10.235",
+                "vmkmgtvlan": "511",
+                "vmknfsip": "10.51.30.235",
+                "vmknfsvlan": "513",
+                "distributedswitch": "vds-compute"
+            },
+            {
+                "name": "esxi-01b",
+                "cluster": "Compute Cluster B",
+                "vmkmgtip": "10.51.10.236",
+                "vmkmgtvlan": "511",
+                "vmknfsip": "10.51.30.236",
+                "vmknfsvlan": "513",
+                "distributedswitch": "vds-compute"
+            },
+            {
+                "name": "esxi-02b",
+                "cluster": "Compute Cluster B",
+                "vmkmgtip": "10.51.10.237",
+                "vmkmgtvlan": "511",
+                "vmknfsip": "10.51.30.237",
+                "vmknfsvlan": "513",
+                "distributedswitch": "vds-compute"
+            }
+        ],
+        "cpu": "4",
+        "memory": "12",
+        "cachedisk": "4",
+        "capacitydisk": "8"
+    },
+    "vcsa": {
+        "deploydatastore": "LAB-EQL-iSCSI01",
+        "deployportgroup": "VMNET-511",
+        "deploymentsize": "tiny",
+        "name": "vcsa-01a",
+        "ip": "10.51.10.240",
+        "hostname": "vcsa-01a.vmworld.local",
+        "rootpassword": "VMware1!",
+        "sso": {
+            "domain": "vsphere.local",
+            "site": "Las-Vegas",
+            "password": "VMware1!"
+        }
+    },
+    "mysddc": {
+        "datacentername": "Las-Vegas",
+        "distributedswitches": [
+            {
+                "name": "vds-compute",
+                "portgroups": "none"
+            },
+            {
+                "name": "vds-edge",
+                "portgroups": [
+                    {
+                        "name": "DPG-511_Management-10.51.10.0",
+                        "vlan": "511"
+                    },
+                    {
+                        "name": "DPG-510_Uplink_HQ-10.51.0.0",
+                        "vlan": "510"
+                    }
+                ]
+            }
+        ],
+        "defaultvswitch": "vSwitch0",
+        "legacyvmportgroup": "VM Network",
+        "nfsvmkname": "NFS",
+        "nfsdatastorename": "nfs-01",
+        "nfsdatastorehost": "10.51.30.250",
+        "nfsdatastorepath": "/volumes/tank1/vmworld-nfs01"
+    }
+}
